@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOP.EEFCore.ConsoleApp.DAL;
 
@@ -11,9 +12,11 @@ using OOP.EEFCore.ConsoleApp.DAL;
 namespace OOP.EEFCore.ConsoleApp.Migrations
 {
     [DbContext(typeof(BookAppDbContext))]
-    partial class BookAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217144310_CategorySeed")]
+    partial class CategorySeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -45,29 +45,24 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
 
                     b.HasKey("BookId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
                             BookId = 1,
-                            CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Devlet"
                         },
                         new
                         {
                             BookId = 2,
-                            CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Yoldaki İşaretler"
                         },
                         new
                         {
                             BookId = 3,
-                            CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Yanlızlık Sözleri"
                         });
@@ -88,9 +83,7 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("No İnfo");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
 
@@ -100,34 +93,21 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CategoryName = "Health"
+                            CategoryName = "Health",
+                            Description = "Health"
                         },
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Computer Scince"
+                            CategoryName = "Computer Scince",
+                            Description = "Computer Scince"
                         },
                         new
                         {
                             CategoryId = 3,
-                            CategoryName = "Novel"
+                            CategoryName = "Novel",
+                            Description = "Novel"
                         });
-                });
-
-            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Book", b =>
-                {
-                    b.HasOne("OOP.EEFCore.ConsoleApp.Entities.Category", "Category")
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Category", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
