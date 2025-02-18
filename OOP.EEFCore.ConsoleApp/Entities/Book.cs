@@ -19,5 +19,7 @@ namespace OOP.EEFCore.ConsoleApp.Entities
         public Category Category { get; set; } // Navigation Property
         public BookDetail BookDetail { get; set; } //Navigation Property
 
+        //Collection navigation property
+        public ICollection<BookAuthor> BookAuthors { get; set; }
     }
 }

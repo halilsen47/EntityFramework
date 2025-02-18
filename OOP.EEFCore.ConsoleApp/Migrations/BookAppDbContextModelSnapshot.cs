@@ -22,6 +22,55 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Zafer",
+                            LastName = "Cömert"
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Ahmet",
+                            LastName = "Yıldırım"
+                        },
+                        new
+                        {
+                            AuthorId = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Fatih",
+                            LastName = "Çevik"
+                        });
+                });
+
             modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Book", b =>
                 {
                     b.Property<int>("BookId")
@@ -79,6 +128,29 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.BookAuthor", b =>
+                {
+                    b.Property<int>("BookAuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookAuthorId"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookAuthorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookAuthors");
+                });
+
             modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.BookDetail", b =>
                 {
                     b.Property<int>("BookDetailId")
@@ -100,10 +172,14 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
 
                     b.Property<string>("ISSN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("0000-0000-0000");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(2025);
 
                     b.HasKey("BookDetailId");
 
@@ -140,17 +216,17 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CategoryName = "Health"
+                            CategoryName = "Novel"
                         },
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Computer Scince"
+                            CategoryName = "Health"
                         },
                         new
                         {
                             CategoryId = 3,
-                            CategoryName = "Novel"
+                            CategoryName = "Computer Scince"
                         });
                 });
 
@@ -164,6 +240,25 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.BookAuthor", b =>
+                {
+                    b.HasOne("OOP.EEFCore.ConsoleApp.Entities.Author", "Author")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OOP.EEFCore.ConsoleApp.Entities.Book", "Book")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.BookDetail", b =>
                 {
                     b.HasOne("OOP.EEFCore.ConsoleApp.Entities.Book", "Book")
@@ -175,8 +270,15 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                     b.Navigation("Book");
                 });
 
+            modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
             modelBuilder.Entity("OOP.EEFCore.ConsoleApp.Entities.Book", b =>
                 {
+                    b.Navigation("BookAuthors");
+
                     b.Navigation("BookDetail")
                         .IsRequired();
                 });

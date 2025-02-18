@@ -23,7 +23,12 @@ namespace OOP.EEFCore.ConsoleApp.DAL.mapping
             builder.Property(c => c.Description)
                 .HasDefaultValue("No İnfo");
 
- 
+            builder.HasData
+                (
+                    new Category() { CategoryId = 1,CategoryName = "Novel"},
+                    new Category() { CategoryId = 2,CategoryName = "Health"},
+                    new Category() { CategoryId = 3,CategoryName = "Computer Scince"}
+                );
 
 
         }
