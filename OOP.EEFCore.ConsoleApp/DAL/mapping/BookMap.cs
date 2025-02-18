@@ -10,7 +10,7 @@ using OOP.EEFCore.ConsoleApp.Entities;
 
 namespace OOP.EEFCore.ConsoleApp.DAL.mapping
 {
-    public class BookMap : IEntityTypeConfiguration<Book>
+    public partial class BookMap : IEntityTypeConfiguration<Book>
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
@@ -25,15 +25,16 @@ namespace OOP.EEFCore.ConsoleApp.DAL.mapping
 
 
             builder.HasData(
-                new Book(){BookId = 1,Title = "Devlet",CategoryId = 3},
-                new Book(){BookId = 2,Title = "Yoldaki İşaretler",CategoryId = 3},
-                new Book(){BookId = 3,Title = "Yanlızlık Sözleri",CategoryId = 3}
+                new Book(){BookId = 1,Title = "Devlet",CategoryId = 2},
+                new Book(){BookId = 2,Title = "Yoldaki İşaretler",CategoryId = 2},
+                new Book(){BookId = 3,Title = "Yanlızlık Sözleri",CategoryId = 2}
             );
 
+            //Relation one-to-many
             builder.HasOne(b => b.Category)
                 .WithMany(c => c.Books)
                 .HasForeignKey(b=>b.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

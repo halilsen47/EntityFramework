@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOP.EEFCore.ConsoleApp.DAL;
 
@@ -11,9 +12,11 @@ using OOP.EEFCore.ConsoleApp.DAL;
 namespace OOP.EEFCore.ConsoleApp.Migrations
 {
     [DbContext(typeof(BookAppDbContext))]
-    partial class BookAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250218224347_bookcategorydeletebehavior1")]
+    partial class bookcategorydeletebehavior1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 1,
-                            CategoryId = 2,
+                            CategoryId = 1,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Devlet"
@@ -72,7 +75,7 @@ namespace OOP.EEFCore.ConsoleApp.Migrations
                         new
                         {
                             BookId = 3,
-                            CategoryId = 2,
+                            CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m,
                             Title = "Yanlızlık Sözleri"

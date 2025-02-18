@@ -15,19 +15,15 @@ namespace OOP.EEFCore.ConsoleApp.DAL.mapping
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(c => c.CategoryId);
-
+            
             builder.Property(c => c.CategoryName)
                 .IsRequired()
                 .HasMaxLength(200);
+            
             builder.Property(c => c.Description)
                 .HasDefaultValue("No İnfo");
 
-            builder.HasData
-                (
-                    new Category() { CategoryId = 1, CategoryName = "Health"},
-                    new Category() { CategoryId = 2, CategoryName = "Computer Scince"},
-                    new Category() { CategoryId = 3, CategoryName = "Novel"}
-                );
+ 
 
 
         }

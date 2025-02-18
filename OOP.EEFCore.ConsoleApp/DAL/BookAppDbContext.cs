@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OOP.EEFCore.ConsoleApp.DAL.mapping;
 using OOP.EEFCore.ConsoleApp.Entities;
+using static OOP.EEFCore.ConsoleApp.DAL.mapping.BookMap;
 
 namespace OOP.EEFCore.ConsoleApp.DAL
 {
@@ -13,6 +14,7 @@ namespace OOP.EEFCore.ConsoleApp.DAL
     {
         public DbSet<Book> Books{ get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<BookDetail> BookDetails { get; set; } 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog= BookAppDb;");
@@ -30,6 +32,7 @@ namespace OOP.EEFCore.ConsoleApp.DAL
 
             modelBuilder.ApplyConfiguration(new BookMap());
             modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new BookDetailMap());
         
         }
 

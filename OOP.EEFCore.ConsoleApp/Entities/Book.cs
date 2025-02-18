@@ -13,8 +13,11 @@ namespace OOP.EEFCore.ConsoleApp.Entities
         public int BookId { get; set; }
         public string Title { get; set; }
         public DateTime CreatedTime { get; set; }
-        public int CategoryId { get; set; }
+        public decimal Price { get; set; }
+        //Foregin Key   
+        public int? CategoryId { get; set; }
         public Category Category { get; set; } // Navigation Property
+        public BookDetail BookDetail { get; set; } //Navigation Property
 
     }
 }
